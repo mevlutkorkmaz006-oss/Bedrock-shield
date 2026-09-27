@@ -17,8 +17,8 @@ public class BedrockShieldMixin {
 
         // Eğilirken ve sol elde kalkan varken
         if (player.isSneaking() && player.getOffHandStack().isOf(Items.SHIELD)) {
-            // Vururken veya blok koymaya çalışırken kalkan kilidini anlık kaldır
-            if (player.handSwinging || player.isAttacking()) {
+            // El sallama/vuruş animasyonu varsa veya aktif item kullanılıyorsa kalkan engellemesini kaldır
+            if (player.handSwinging) {
                 if (player.isUsingItem() && player.getActiveHand() == Hand.OFF_HAND) {
                     player.clearActiveItem();
                 }
