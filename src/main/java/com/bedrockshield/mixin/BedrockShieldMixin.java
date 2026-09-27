@@ -15,14 +15,14 @@ public class BedrockShieldMixin {
     private void onTick(CallbackInfo info) {
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
 
-        // Oyuncu eğiliyorsa VE sol elde kalkan varsa
+        // Eğilirken ve sol elde kalkan varken
         if (player.isSneaking() && player.getOffHandStack().isOf(Items.SHIELD)) {
-            // Tıklama (sol tık vurma veya sağ tık blok koyma) anında
-            if (player.handSwinging) {
-                // Kalkanı anlık indir (Bedrock gibi kesinti sağla)
-                player.clearActiveItem();
+            // Vururken veya blok koymaya çalışırken kalkan kilidini anlık kaldır
+            if (player.handSwinging || player.isAttacking()) {
+                if (player.isUsingItem() && player.getActiveHand() == Hand.OFF_HAND) {
+                    player.clearActiveItem();
+                }
             } else if (!player.isUsingItem()) {
-                // Tıklama yoksa kalkanı kaldırmaya devam et
                 player.setCurrentHand(Hand.OFF_HAND);
             }
         }
